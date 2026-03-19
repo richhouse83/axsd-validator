@@ -10,13 +10,13 @@ This package is a drop-in replacement using libxml2-wasm instead of native bindi
 
 ### Installation
 
-# If migrating from `@richhouse83/xsd-validator`
+#### If migrating from `@richhouse83/xsd-validator`
 ```bash
 npm uninstall @richhouse83/xsd-validator
 npm install axsd-validator
 ```
 
-# Else
+#### Else
 
 ```bash
 npm install axsd-validator
