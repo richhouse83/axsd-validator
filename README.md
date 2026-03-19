@@ -3,7 +3,7 @@
 This package is a drop-in replacement using libxml2-wasm instead of native bindings.
 
 ### Why migrate?
-- ✅ Works on Node 25+
+- ✅ Works on Node 25+ (Also tested on 18, 20 and 22)
 - ✅ No node-gyp / build tools required
 - ✅ Faster installs (no compilation)
 - ✅ Same API
