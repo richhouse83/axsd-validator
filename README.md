@@ -24,7 +24,3 @@ validateSchema('<xml...', '<xs:schema...')
 // [error, error ... ]
 
 ```
-
-### Requirements
-
-Make sure you have met the requirements for [node-gyp](https://github.com/TooTallNate/node-gyp#installation). You DO NOT need to manually install node-gyp; it comes bundled with node.
