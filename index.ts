@@ -1,26 +1,40 @@
-import { parseXml } from "libxmljs2"
-import type { ParserOptions } from "libxmljs2"
-
-// todo: bin linking
+import {
+  XmlDocument,
+  XsdValidator,
+  ParseOptions,
+  XmlValidateError,
+} from "libxml2-wasm";
 
 export default function validateSchema(
-    xml: string|Buffer,
-    xsdSchema: string|Buffer,
-    xmlParserOptions ?: ParserOptions,
-    xsdParserOptions ?: ParserOptions
-) : true|ValidationError[] {
-  const parsedXML = parseXml(xml.toString(), xmlParserOptions),
-        parsedSchema = parseXml(xsdSchema.toString(), xsdParserOptions)
+  xml: string | Buffer,
+  xsdSchema: string | Buffer,
+  xmlParserOptions?: ParseOptions,
+  xsdParserOptions?: ParseOptions,
+): true | ValidationError[] {
+  const parsedXML = XmlDocument.fromString(xml.toString(), xmlParserOptions),
+    parsedSchema = XmlDocument.fromString(
+      xsdSchema.toString(),
+      xsdParserOptions,
+    ),
+    validator = XsdValidator.fromDoc(parsedSchema);
 
   // @ts-ignore
-  return parsedXML.validate(parsedSchema) || parsedXML.validationErrors
+  try {
+    validator.validate(parsedXML);
+  } catch (error) {
+    if (error instanceof XmlValidateError) {
+      return error.details.map((detail) => new ValidationError(detail.message, detail.line, detail.col));
+    }
+  }
+  return true;
 }
 
-export interface ValidationError extends Error {
-  domain: number|null;
-  code: number|null;
-  level: number|null;
-
-  line: number|null;
-  column: number;
+export class ValidationError extends Error {
+  public line: number | undefined;
+  public col: number | undefined;
+  constructor (message: string, line: number, col: number) {
+    super(message);
+    this.line = line;
+    this.col = col;
+  }
 }
