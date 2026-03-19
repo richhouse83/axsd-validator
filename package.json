@@ -1,7 +1,7 @@
 {
   "name": "axsd-validator",
   "version": "1.0.1",
-  "description": "AnotherXSD schema validator",
+  "description": "Another XSD schema validator",
   "author": "Rich House <rich@richhouse.co.uk>",
   "license": "ISC",
   "keywords": [
